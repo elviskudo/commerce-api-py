@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+    app:
+        build: .
+        ports:
+            - '8000:8000'
+        environment:
+            - DATABASE_URL=postgresql://postgres:123@db:5432/yourdatabase
+            - STRIPE_SECRET_KEY=your_stripe_secret_key
+            - MAILGUN_API_KEY=your_mailgun_api_key
+            - MAILGUN_DOMAIN=your_mailgun_domain
+            - JWT_SECRET_KEY=your_jwt_secret_key
+            - REDIS_URL=redis://redis:6379/0
+            - ELASTICSEARCH_URL=http://elasticsearch:9200
+        depends_on:
+            - db
+            - redis
+            - elasticsearch
+
+    db:
+        image: postgres:14
+        environment:
+            POSTGRES_DB: yourdatabase
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: 123
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+
+    redis:
+        image: redis:alpine
+        ports:
+            - '6379:6379'
+
+    elasticsearch:
+        image: docker.elastic.co/elasticsearch/elasticsearch:7.17.0
+        environment:
+            - discovery.type=single-node
+            - 'ES_JAVA_OPTS=-Xms512m -Xmx512m'
+        ports:
+            - '9200:9200'
+        volumes:
+            - elasticsearch_data:/usr/share/elasticsearch/data
+
+volumes:
+    postgres_data:
