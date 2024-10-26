@@ -6,6 +6,12 @@ MAILGUN_API_KEY = os.getenv("MAILGUN_API_KEY")
 MAILGUN_DOMAIN = os.getenv("MAILGUN_DOMAIN")
 JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
 REDIS_URL = os.getenv("REDIS_URL")
+
+# Token
 SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
+
+# ChatGPT Configuration
+CHATGPT_API_KEY = os.getenv("CHATGPT_API_KEY")
+CHATGPT_API_BASE_URL = os.getenv("CHATGPT_API_BASE_URL")
